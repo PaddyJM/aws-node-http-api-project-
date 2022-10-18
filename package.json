@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "db": "docker compose up -d"
+    "db": "docker compose up -d",
+    "migrate": "prisma migrate dev --name init"
   },
   "devDependencies": {
     "@types/node": "^18.8.2",
