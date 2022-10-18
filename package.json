@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "db": "docker compose up -d",
-    "migrate": "prisma migrate dev --name init"
+    "migrate": "prisma migrate dev --name init",
+    ".env": "cp .env.example .env"
   },
   "devDependencies": {
     "@types/node": "^18.8.2",
