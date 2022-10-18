@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "db": "docker composer up -d"
+    "db": "docker compose up -d"
   },
   "devDependencies": {
     "@types/node": "^18.8.2",
