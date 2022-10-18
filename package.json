@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "db": "docker composer up -d"
+  },
   "devDependencies": {
     "@types/node": "^18.8.2",
     "aws-sdk": "^2.1227.0",
