@@ -1,8 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
-
-const findMany = async () => {
+const findMany = async (prisma: PrismaClient) => {
   return await prisma.user.findMany({
     include: {
       posts: true,
