@@ -1,6 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 
-const create = async(prisma: PrismaClient, data: any) => {
+interface User {
+  name: string,
+  email: string,
+  posts: {
+    create: {
+      title: string
+    }
+  },
+  profile: {
+    create: {
+      bio: string
+    }
+  }
+}
+
+const create = async(prisma: PrismaClient, data: User) => {
   console.log(data);
   await prisma.user.create({
     data: {
