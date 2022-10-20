@@ -1,11 +1,28 @@
 import { PrismaClient } from "@prisma/client";
 import createUser from "./user/create";
 import findManyUsers from "./user/findMany";
+import { z } from "zod";
 
 const prisma = new PrismaClient();
 
-async function main(request: any) {
+const userSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  posts: z.object({
+    create: z.object({
+      title: z.string(),
+    }),
+  }),
+  profile: z.object({
+    create: z.object({
+      bio: z.string(),
+    }),
+  }),
+});
+
+export async function main(request: any) {
   if (request.endpoint === "users" && request.method === "POST") {
+    userSchema.parse(request.body)
     createUser(prisma, request.body);
   }
 
