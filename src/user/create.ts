@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import client from "../../lib/client";
 
 interface User {
   name: string,
@@ -15,9 +15,8 @@ interface User {
   }
 }
 
-const create = async(prisma: PrismaClient, data: User) => {
-  console.log(data);
-  await prisma.user.create({
+const create = async(data: User) => {
+  await client.user.create({
     data: {
       name: data.name,
       email: data.email,

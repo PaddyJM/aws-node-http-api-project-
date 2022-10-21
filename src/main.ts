@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import client from "../lib/client";
 import createUser from "./user/create";
 import findManyUsers from "./user/findMany";
 import { z } from "zod";
-
-const prisma = new PrismaClient();
 
 const userSchema = z.object({
   name: z.string(),
@@ -23,15 +21,23 @@ const userSchema = z.object({
 export async function main(request: any) {
   if (request.endpoint === "users" && request.method === "POST") {
     userSchema.parse(request.body)
-    createUser(prisma, request.body);
+    createUser(request.body);
   }
 
   let allUsers;
   if (request.endpoint === "users" && request.method === "GET") {
-    allUsers = await findManyUsers(prisma);
+    allUsers = await findManyUsers();
   }
 
   console.dir(allUsers, { depth: null });
+
+  try {
+    await client.$disconnect();
+  } catch(e) {
+    console.error(e);
+    await client.$disconnect();
+    process.exit(1);
+  };
 }
 
 const postRequest = {
@@ -55,11 +61,11 @@ const postRequest = {
 
 main(postRequest)
   .then(async () => {
-    await prisma.$disconnect();
+    await client.$disconnect();
   })
   .catch(async (e) => {
     console.error(e);
-    await prisma.$disconnect();
+    await client.$disconnect();
     process.exit(1);
   });
 
@@ -70,10 +76,10 @@ const getRequest = {
 
 main(getRequest)
   .then(async () => {
-    await prisma.$disconnect();
+    await client.$disconnect();
   })
   .catch(async (e) => {
     console.error(e);
-    await prisma.$disconnect();
+    await client.$disconnect();
     process.exit(1);
   });
